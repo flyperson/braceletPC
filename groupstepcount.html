@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="ThemeBucket">
+  <link rel="shortcut icon" href="#" type="image/png">
+
+  <title>分组每天步数查看</title>
+
+  <!--dynamic table-->
+  <link href="js/advanced-datatable/css/demo_page.css" rel="stylesheet" />
+  <link href="js/advanced-datatable/css/demo_table.css" rel="stylesheet" />
+  <link rel="stylesheet" href="js/data-tables/DT_bootstrap.css" />
+
+  <link href="css/style.css" rel="stylesheet">
+  <link href="css/style-responsive.css" rel="stylesheet">
+
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="js/html5shiv.js"></script>
+  <script src="js/respond.min.js"></script>
+  <![endif]-->
+  
+  <!--pickers css-->
+  <link rel="stylesheet" type="text/css" href="js/bootstrap-datepicker/css/datepicker-custom.css" />
+  
+
+  
+</head>
+
+<body class="sticky-header hidden">
+
+<section>
+    <!-- left side start-->
+    <div class="left-side sticky-left-side">
+
+        <!--logo and iconic logo start-->
+        <div class="logo">
+            <!--<a href="index.html"><img src="images/logo.png" alt=""></a>-->
+        </div>
+
+        <div class="logo-icon text-center">
+            <!--<a href="index.html"><img src="images/logo_icon.png" alt=""></a>-->
+        </div>
+        <!--logo and iconic logo end-->
+
+
+        <div class="left-side-inner">
+
+            
+
+            <!--sidebar nav start-->
+            <ul class="nav nav-pills nav-stacked custom-nav">
+                <li class="menu-list nav-active"><a href="index.html"><i class="fa fa-home"></i> <span>后台管理</span></a>
+                    <ul class="sub-menu-list">
+                        <li><a href="index.html"> 人员信息 </a></li>
+                        <li><a href="article.html"> 文章 </a></li>
+                        <li><a href="userstepcount.html"> 个人步数 </a></li>
+                        <li><a href="userheartrate.html"> 个人心率 </a></li>
+                        <li><a href="usertotalstepcount.html"> 个人总步数 </a></li>
+                        <li class="active"><a href="groupstepcount.html"> 分组步数 </a></li>
+                        <li><a href="grouptotalstepcount.html"> 分组总步数 </a></li>
+                    </ul>
+                </li>
+            </ul>
+            <!--sidebar nav end-->
+
+        </div>
+    </div>
+    <!-- left side end-->
+    
+    <!-- main content start-->
+    <div class="main-content" >
+
+        <!-- header section start-->
+        <div class="header-section">
+
+        <!--toggle button start-->
+        <a class="toggle-btn"><i class="fa fa-bars"></i></a>
+        <!--toggle button end-->
+
+        
+
+        </div>
+        <!-- header section end-->
+
+        
+
+        <!--body wrapper start-->
+        <div class="wrapper">
+	        <div class="row">
+		        <div class="col-sm-12">
+			        <section class="panel">
+				        <header class="panel-heading">
+				            分组每天步数信息
+				            <!--<span class="tools pull-right">
+				                <a href="javascript:;" class="fa fa-chevron-down"></a>
+				                <a href="javascript:;" class="fa fa-times"></a>
+				             </span>-->
+				        </header>
+				        <div class="panel-body">
+					        <div class="adv-table">
+						        <table  class="display table table-bordered table-striped" id="dynamic-table">
+							        <thead>
+								        <tr>
+								            <th>分组</th>
+								            <th>分组人数</th>
+								            <th>总步数</th>
+								            <th>总分数</th>
+								            <th>平均分</th>
+								            <!--<th>总卡路里</th>-->
+								            <th>日期</th>
+								        </tr>
+							        </thead>
+							        <tbody>
+							        	
+							        </tbody>
+						        </table>
+					        </div>
+				        </div>
+			        </section>
+		        </div>
+	        </div>
+        </div>
+        <!--body wrapper end-->
+    </div>
+    <!-- main content end-->
+</section>
+
+<!--js库-->
+<!-- Placed js at the end of the document so the pages load faster -->
+<script src="js/jquery-1.10.2.min.js"></script>
+<script src="js/jquery-ui-1.9.2.custom.min.js"></script>
+<script src="js/jquery-migrate-1.2.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/modernizr.min.js"></script>
+<script src="js/jquery.nicescroll.js"></script>
+
+<!--common scripts for all pages-->
+<script src="js/scripts.js"></script>
+
+<!--dynamic table-->
+<script type="text/javascript" language="javascript" src="js/advanced-datatable/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="js/data-tables/DT_bootstrap.js"></script>
+
+<!--pickers plugins-->
+<script type="text/javascript" src="js/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+<script type="text/javascript" src="js/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
+<script type="text/javascript" src="js/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
+<script type="text/javascript" src="js/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+<!--pickers initialization-->
+<script src="js/pickers-init.js"></script>
+
+<!--判断是否登录-->
+<script type="text/javascript" src="js/judgelogin.js"></script>
+
+<script type="text/javascript">
+		var datatableoption = {
+	    	"oLanguage": {//四个部件的语言设置
+        	"oPaginate": {
+	        	"sFirst": "首页",
+	          "sPrevious": "上一页",
+	          "sNext": "下一页",
+		        "sLast": "末页"
+			    },
+			    "sLengthMenu": "_MENU_ 行/页",
+			    "sInfo": "本页显示 _START_ 到 _END_ 行 共 _TOTAL_ 行",
+	        "sSearch": "查找：",
+	        "sEmptyTable": "无数据！",
+	        "sInfoEmpty": "本页显示 0 到 0 行 共 0 行",
+	        "sLoadingRecords": "加载中...",
+	        "sProcessing": "处理中...",
+	        "sInfoFiltered": "(在 _MAX_ 行中没有找到相应行)",
+					"sZeroRecords": "没有找到相应数据！",
+	      },
+	      "aLengthMenu": [
+	        [5, 15, 20,30,100, -1],
+	        [5, 15, 20,30,100, "All"] // change per page values here
+        ],
+        "iDisplayLength": 5,
+//      "sDom": "<'row'<'col-lg-6'l><'col-lg-6'f>r>t<'row'<'col-lg-6'i><'col-lg-6'p>>",
+        "sPaginationType": "bootstrap",//编页码类型
+        "aaSorting": [],
+        
+        "sAjaxSource": "stepcount_data.php",
+        "fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
+        	oSettings.jqXHR = $.ajax( {
+        		"dataType": 'json', 
+		        "type": "GET", 
+		        "url": sSource, 
+		        "data": {
+		        	"flag":"GetGroupStepcountMessage"
+		        },
+		        "success": function(data){
+//		        	console.log(data);
+		        	if (!data.state ) {
+								oSettings.oApi._fnLog( oSettings, 0, data.message );
+							}
+							$(oSettings.oInstance).trigger('xhr', [oSettings, data]);
+							fnCallback( data );
+		        },
+		        error: function(x,s,t){
+		        	alert("加载数据失败");
+		        	console.log("ajax error! "+s+": "+t);
+		        }
+        	})
+        },
+        "sAjaxDataProp": "data",
+				"aoColumns":[
+					{"mData":"usergroup"},
+					{"mData":"groupnum"},
+					{"mData":"step_count"},
+					{"mData":"score"},
+					{"mData":"average"},
+//					{"mData":"calorie"},
+					{"mData":"record_date"}
+				],
+	    }
+	  var Tab =  $('#dynamic-table').dataTable(datatableoption);
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="ThemeBucket">
+  <link rel="shortcut icon" href="#" type="image/png">
+
+  <title>显示文章</title>
+
+  <!--dynamic table-->
+  <link href="js/advanced-datatable/css/demo_page.css" rel="stylesheet" />
+  <link href="js/advanced-datatable/css/demo_table.css" rel="stylesheet" />
+  <link rel="stylesheet" href="js/data-tables/DT_bootstrap.css" />
+
+  <link href="css/style.css" rel="stylesheet">
+  <link href="css/style-responsive.css" rel="stylesheet">
+
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="js/html5shiv.js"></script>
+  <script src="js/respond.min.js"></script>
+  <![endif]-->
+  <style type="text/css">
+  	body,html {
+  		background-color: #FFFFFF;
+  	}
+  </style>
+</head>
+
+<body>
+
+<section>
+    <!--body wrapper start-->
+    <div class="wrapper">
+        <div class="row">
+	        <div class="col-sm-12">
+		        <section class="panel">
+			        <div id="my_article">
+			        	
+			        </div>
+		        </section>
+	        </div>
+        </div>
+    </div>
+    <!--body wrapper end-->
+</section>
+
+<!-- Placed js at the end of the document so the pages load faster -->
+<script src="js/jquery-1.10.2.min.js"></script>
+<script src="js/jquery-ui-1.9.2.custom.min.js"></script>
+<script src="js/jquery-migrate-1.2.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/modernizr.min.js"></script>
+<script src="js/jquery.nicescroll.js"></script>
+
+<!--dynamic table-->
+<script type="text/javascript" language="javascript" src="js/advanced-datatable/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="js/data-tables/DT_bootstrap.js"></script>
+
+<!--字符串与base64互转-->
+<script src="js/base64.js"></script>
+
+<!--common scripts for all pages-->
+<script src="js/scripts.js"></script>
+
+<script type="text/javascript">
+	function GetQueryString(name){
+	    var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+	    var r = window.location.search.substr(1).match(reg);
+	    if(r!=null)return  unescape(r[2]); return null;
+	}
+	
+	var myurl=GetQueryString("id");
+	if(myurl !=null && myurl.toString().length>0){
+//	   console.log(GetQueryString("id"));
+	    $.ajax({
+			type:"get",
+			url:"article.php",
+			async:true,
+			dataType:"json",
+			data:{
+				flag : "CheckArticle",
+				selfid : myurl
+			},
+			success: function(data){
+				console.log(data)
+				if(data.state){
+					//文章内容转码
+				  	var b = new Base64(); 
+				  	var art_content = b.decode(data.data[0].content);
+					
+			  		$("#my_article").html(art_content);
+				}else{
+					alert("查看失败");
+					console.log(data.msg);
+				}
+			},
+			error: function(x,s,t){
+				alert("查看失败!");
+				console.log("ajax error! "+ s +": "+ t);
+			}
+		});
+	}
+	
+	
+</script>
+
+</body>
+</html>

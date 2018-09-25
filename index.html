@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="ThemeBucket">
+  <link rel="shortcut icon" href="#" type="image/png">
+
+  <title>用户管理</title>
+
+  <!--dynamic table-->
+  <link href="js/advanced-datatable/css/demo_page.css" rel="stylesheet" />
+  <link href="js/advanced-datatable/css/demo_table.css" rel="stylesheet" />
+  <link rel="stylesheet" href="js/data-tables/DT_bootstrap.css" />
+
+  <link href="css/style.css" rel="stylesheet">
+  <link href="css/style-responsive.css" rel="stylesheet">
+
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="js/html5shiv.js"></script>
+  <script src="js/respond.min.js"></script>
+  <![endif]-->
+  
+  <!--pickers css-->
+  <link rel="stylesheet" type="text/css" href="js/bootstrap-datepicker/css/datepicker-custom.css" />
+  
+
+  
+</head>
+
+<body class="sticky-header hidden">
+
+<section>
+    <!-- left side start-->
+    <div class="left-side sticky-left-side">
+
+        <!--logo and iconic logo start-->
+        <div class="logo">
+            <!--<a href="index.html"><img src="images/logo.png" alt=""></a>-->
+        </div>
+
+        <div class="logo-icon text-center">
+            <!--<a href="index.html"><img src="images/logo_icon.png" alt=""></a>-->
+        </div>
+        <!--logo and iconic logo end-->
+
+
+        <div class="left-side-inner">
+
+            
+
+            <!--sidebar nav start-->
+            <ul class="nav nav-pills nav-stacked custom-nav">
+                <li class="menu-list nav-active"><a href="index.html"><i class="fa fa-home"></i> <span>后台管理</span></a>
+                    <ul class="sub-menu-list">
+                        <li class="active"><a href="index.html"> 人员信息 </a></li>
+                        <li><a href="article.html"> 文章 </a></li>
+                        <li><a href="userstepcount.html"> 个人步数 </a></li>
+                        <li><a href="userheartrate.html"> 个人心率 </a></li>
+                        <li><a href="usertotalstepcount.html"> 个人总步数 </a></li>
+                        <li><a href="groupstepcount.html"> 分组步数 </a></li>
+                        <li><a href="grouptotalstepcount.html"> 分组总步数 </a></li>
+                    </ul>
+                </li>
+            </ul>
+            <!--sidebar nav end-->
+
+        </div>
+    </div>
+    <!-- left side end-->
+    
+    <!-- main content start-->
+    <div class="main-content" >
+
+        <!-- header section start-->
+        <div class="header-section">
+
+        <!--toggle button start-->
+        <a class="toggle-btn"><i class="fa fa-bars"></i></a>
+        <!--toggle button end-->
+
+        
+
+        </div>
+        <!-- header section end-->
+
+        
+
+        <!--body wrapper start-->
+        <div class="wrapper">
+	        <div class="row">
+		        <div class="col-sm-12">
+			        <section class="panel">
+				        <header class="panel-heading">
+				            人员信息
+				            <!--<span class="tools pull-right">
+				                <a href="javascript:;" class="fa fa-chevron-down"></a>
+				                <a href="javascript:;" class="fa fa-times"></a>
+				             </span>-->
+				        </header>
+				        <div class="panel-body">
+					        <div class="adv-table">
+					        	<button class="btn btn-primary" data-toggle="modal" href="#ImportExcel">导入Excel</button>
+					        	<!--<button onclick="RefreshTable()">重构</button>-->
+					        	<!--<button class="btn btn-primary" data-toggle="modal" href="#JudgeOxygen">有氧判断</button>-->
+						        <table  class="display table table-bordered table-striped" id="dynamic-table">
+							        <thead>
+								        <tr>
+								        		<th>ID</th>
+								            <th>账号</th>
+								            <th>姓名</th>
+								            <th>分组</th>
+								            <th>年龄</th>
+								            <th>绑定标记</th>
+								            <th>注册日期</th>
+								            <!--<th>操作</th>-->
+								        </tr>
+							        </thead>
+							        <tbody>
+							        	
+							        </tbody>
+						        </table>
+					        </div>
+				        </div>
+			        </section>
+		        </div>
+	        </div>
+        </div>
+        <!--body wrapper end-->
+        
+    <!--查看用户信息模块 star-->
+		<div class="modal fade" id="SelfMessage" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title">个人信息</h4>
+					</div>
+					<div class="modal-body">
+						<div class="form-horizontal " id="my_form">
+							<div class="form-group">
+	                <label class="control-label col-md-4">姓名：</label>
+	                <div class="col-md-6 col-xs-11">
+	                    <input class="form-control form-control-inline input-medium save_input" type="text" />
+	                </div>
+	            </div>
+					 		<div class="form-group">
+                <label class="control-label col-md-4">账号：</label>
+                <div class="col-md-6 col-xs-11">
+                    <input id="kh" class="form-control form-control-inline input-medium"  type="text" readonly="readonly" />
+                </div>
+            	</div>
+            	<div class="form-group">
+	                <label class="control-label col-md-4">密码：</label>
+	                <div class="col-md-6 col-xs-11">
+	                    <input class="form-control form-control-inline input-medium save_input" type="text" readonly="readonly" />
+	                </div>
+	            </div>
+	            <div class="form-group">
+	                <label class="control-label col-md-4">分组：</label>
+	                <div class="col-md-6 col-xs-11">
+	                    <input class="form-control form-control-inline input-medium save_input" type="text" />
+	                </div>
+	            </div>
+	            <div class="form-group">
+	                <label class="control-label col-md-4">绑定手环mac：</label>
+	                <div class="col-md-6 col-xs-11">
+	                    <input class="form-control form-control-inline input-medium save_input" type="text" readonly="readonly" />
+	                    <button class="btn btn-danger" id="removebracelet" name="" onclick="RemoveBracelet(this)">解除绑定</button>
+	                </div>
+	            </div>
+					 	</div>
+            <div class="modal-footer" align="center">
+            	<button id="save_add" class="btn btn-primary" type="button" onclick="Savenew_data(this)" >保存</button>
+              <button data-dismiss="modal" class="btn btn-primary" type="button">关闭</button>
+        		</div>
+       		</div>
+        </div>
+    	</div>
+    </div>		
+    <!--查看用户信息模块 end-->
+    
+    <!--查看用户信息模块 star-->
+		<div class="modal fade" id="ImportExcel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title">Excel表格导入</h4>
+					</div>
+					<div class="modal-body">
+						<div class="form-horizontal ">
+							<div class="form-group center">
+								<p style="color: red;">说明：请先下载模板Excel表格填写信息，填写完毕后再进行导入，否则会导入失败！</p>
+							</div>
+							<div class="form-group">
+	                <label class="control-label col-md-4">Excel表格模板下载：</label>
+	                <div class="col-md-6 col-xs-11">
+	                    <input class="form-control form-control-inline input-medium" type="button" value="下载" onclick="DownloadImportTemplate()" />
+	                </div>
+	            </div>
+					 		<div class="form-group">
+                <label class="control-label col-md-4">导入Excel表格：</label>
+                <div class="col-md-6 col-xs-11">
+                    <input class="form-control form-control-inline input-medium"  type="file" id="excelfile" />
+                </div>
+            	</div>
+            	<div id="errorexceldata" class="form-group hidden">
+	                <label class="control-label col-md-4">错误Excel表格下载：</label>
+	                <div class="col-md-6 col-xs-11">
+	                    <input class="form-control form-control-inline input-medium save_input" type="button" value="下载" onclick="DownloadImportErrordata()" />
+	                </div>
+	            </div>
+					 	</div>
+            <div class="modal-footer" align="center">
+            	<button class="btn btn-primary" type="button" onclick="Import_Excel(this)" >导入</button>
+              <button data-dismiss="modal" class="btn btn-primary" type="button">关闭</button>
+        		</div>
+       		</div>
+        </div>
+    	</div>
+    </div>		
+    <!--查看用户信息模块 end-->	
+    
+    <!--个人有氧判断模块 star-->
+		<div class="modal fade" id="JudgeOxygen" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title">个人有氧判断</h4>
+					</div>
+					<div class="modal-body">
+						<div class="form-inline"><!--class="form-horizontal"-->
+							<div class="form-group">
+                <label>账号：</label>
+                <input class="form-control" style="border: none;width: 150px;" readonly="readonly" type="text" value=""  />
+	            </div>
+					 		<div class="form-group">
+                <label>年龄：</label>
+                <input class="form-control" style="border: none;width: 50px;" readonly="readonly" type="text" value=""  />
+            	</div>
+            	<div id="errorexceldata" class="form-group">
+	              <label>达标心率：</label>
+                <input class="form-control" style="border: none;width: 50px;" readonly="readonly" type="text" value=""  />
+	            </div>
+					 	</div>
+					 	<div>
+					 		<h3>今天达标心率</h3>
+					 		<table class="table table-bordered">
+					 			<thead>
+					 				<tr>
+					 					<th>时间</th>
+					 					<th>心率</th>
+					 				</tr>
+					 			</thead>
+					 			<tbody id="heartratedata">
+					 				
+					 			</tbody>
+					 		</table>
+					 	</div>
+					 	<div class="form-horizontal"><!--class="form-horizontal"-->
+					 		<div class="form-group">
+                <label class="control-label col-md-4">是否达到有氧运动：</label>
+                <div class="col-md-4 col-xs-11">
+	                <select class="form-control">
+	                	<option value="否" selected="selected">否</option>
+	                	<option value="是">是</option>
+	                </select>
+                </div>
+               </div>
+					 	</div>
+            <div class="modal-footer" align="center">
+            	<button class="btn btn-primary" type="button" id="save_isoxygen" name="" onclick="Save_IsOxygen(this)" >保存</button>
+              <button data-dismiss="modal" class="btn btn-primary" type="button">关闭</button>
+        		</div>
+       		</div>
+        </div>
+    	</div>
+    </div>		
+    <!--个人有氧判断模块 end-->	
+    
+    
+    </div>
+    <!-- main content end-->
+</section>
+
+<!--js库-->
+<!-- Placed js at the end of the document so the pages load faster -->
+<script src="js/jquery-1.10.2.min.js"></script>
+<script src="js/jquery-ui-1.9.2.custom.min.js"></script>
+<script src="js/jquery-migrate-1.2.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/modernizr.min.js"></script>
+<script src="js/jquery.nicescroll.js"></script>
+
+<!--common scripts for all pages-->
+<script src="js/scripts.js"></script>
+
+<!--dynamic table-->
+<script type="text/javascript" language="javascript" src="js/advanced-datatable/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="js/data-tables/DT_bootstrap.js"></script>
+
+<!--pickers plugins-->
+<script type="text/javascript" src="js/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+<script type="text/javascript" src="js/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
+<script type="text/javascript" src="js/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
+<script type="text/javascript" src="js/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+<!--pickers initialization-->
+<script src="js/pickers-init.js"></script>
+
+<!--判断是否登录-->
+<script type="text/javascript" src="js/judgelogin.js"></script>
+
+<script type="text/javascript">
+		var datatableoption = {
+	    	"oLanguage": {//四个部件的语言设置
+        	"oPaginate": {
+//	        	"sFirst": "首页",
+	          "sPrevious": "上一页",
+	          "sNext": "下一页"
+//		        "sLast": "末页"
+			    },
+			    "sLengthMenu": "_MENU_ 行/页",
+			    "sInfo": "本页显示 _START_ 到 _END_ 行 共 _TOTAL_ 行",
+	        "sSearch": "查找：",
+	        "sEmptyTable": "无数据！",
+	        "sInfoEmpty": "本页显示 0 到 0 行 共 0 行",
+	        "sLoadingRecords": "加载中...",
+	        "sProcessing": "处理中...",
+	        "sInfoFiltered": "(在 _MAX_ 行中没有找到相应行)",
+					"sZeroRecords": "没有找到相应数据！",
+	      },
+	      "aLengthMenu": [
+	        [5, 15, 20,30,100, -1],
+	        [5, 15, 20,30,100, "All"] // change per page values here
+        ],
+        "iDisplayLength": 5,
+//      "sDom": "<'row'<'col-lg-6'l><'col-lg-6'f>r>t<'row'<'col-lg-6'i><'col-lg-6'p>>",
+//      "sPaginationType": "bootstrap",//编页码类型
+        "aaSorting": [],
+        "bAutoWidth": true,
+        "bDestroy": true,
+        
+        "sAjaxSource": "user_json.php",
+        "fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
+        	oSettings.jqXHR = $.ajax( {
+        		"dataType": 'json', 
+		        "type": "GET", 
+		        "url": sSource, 
+		        "data": {
+		        	"flag":"GetUserMessage"
+		        },
+		        "success": function(data){
+//		        	console.log(data);
+		        	if (!data.state ) {
+								oSettings.oApi._fnLog( oSettings, 0, data.message );
+							}
+							$(oSettings.oInstance).trigger('xhr', [oSettings, data]);
+							fnCallback( data );
+		        },
+		        error: function(x,s,t){
+//		        	alert("加载数据失败");
+		        	console.log("ajax error! "+s+": "+t);
+		        }
+        	})
+        },
+        "sAjaxDataProp": "data",
+				"aoColumns":[
+					{"mData":"userid"},
+					{"mData":"userphone"},
+					{"mData":"username"},
+					{"mData":"usergroup"},
+					{"mData":"userage"},
+					{"mData":"usermac"},
+					{"mData":"regisrtationdate"}
+//					{"mData":"handle"}
+				]
+	   };
+	  var Tab =  $('#dynamic-table').dataTable(datatableoption);
+	    
+ 
+ //刷新表格
+ function RefreshTable(){
+	Tab.fnClearTable();
+	Tab.fnDestroy();
+	$('#dynamic-table').attr("style","");
+	Tab =  $('#dynamic-table').dataTable(datatableoption);
+	
+ }
+ 
+ //查看个人信息
+ function CheckMessage(self_obj){
+ 	$.ajax({
+ 		type:"get",
+ 		url:"user_json.php",
+ 		async:true,
+ 		data:{
+ 			flag: "GetOneselfData",
+ 			selfID: self_obj.name
+ 		},
+   	dataType:"json",
+ 		success:function(data){
+ 			if(data.state){
+ 				var selfdata = data.data;
+ 				//循环填入数据
+ 				$("#my_form input").each(function(i){
+ 					$(this).attr("value",selfdata[i]);
+ 				});
+ 				//将对应的id存进保存按钮中
+ 				$("#save_add").attr("name",selfdata[5]);
+ 				$("#removebracelet").attr("name",selfdata[5]);
+ 			}else{
+ 				alert(data.message);
+ 			}
+ 		},
+ 		error:function(x,s,t){
+ 			alert("获取数据失败");
+ 			console.log("ajax error!"+s+": "+t);
+ 		}
+ 	});
+ }
+ 
+ //更改个人信息并保存
+ function Savenew_data(self_obj){
+ 	if(confirm("是否确认修改信息？")){
+	 	//获取数据
+	   	var send_data = {"data":[]};
+	   	var i=0;
+	 	$("#my_form input").each(function(i){
+	 		if(i==0 || i==3){
+	 			var tmpdata = $(this).val().length?$(this).val():"无";
+	 			send_data.data.push(tmpdata);
+	 		}
+	 	})
+	 	send_data.data.push($(self_obj).attr("name"));
+	 	send_data.flag = "UpdateUserData";
+	 	$.ajax({
+	 		type:"post",
+	 		url:"user_json.php",
+	 		data:send_data,
+	   	dataType:"json",
+	 		success:function(data){
+	 			if(data.state){
+	 				alert("保存成功");
+//	 				window.location.reload();
+	 			}else{
+	 				alert("保存失败")
+	 			}
+	 		},
+	 		error:function(x,s,t){
+	 			alert("保存失败");
+	 			console.log("ajax error!"+s+": "+t);
+	 		}
+	 	});
+	}
+ }
+/*
+ 解除手环绑定
+ * */
+function RemoveBracelet(btn_obj){
+	var mac = $(btn_obj).prev("input").val();
+	if(mac.length > 0){
+		if(confirm("是否确认解绑该用户的绑定手环？")){
+			var send_data = {"flag":"RemoveBracelet","userid":btn_obj.name};
+			$.ajax({
+		 		type:"post",
+		 		url:"user_json.php",
+		 		data:send_data,
+		   	dataType:"json",
+		 		success:function(data){
+		 			if(data.state){
+		 				alert("解除成功");
+		 				$(btn_obj).prev("input").attr("value","");
+//		 				window.location.reload();
+		 			}else{
+		 				alert(data.message);
+		 			}
+		 		},
+		 		error:function(x,s,t){
+		 			alert("保存失败");
+		 			console.log("ajax error!"+s+": "+t);
+		 		}
+		 	});
+		}
+	}else{
+		alert("用户没有绑定手环，无需解绑");
+	}
+}
+
+
+ //下载Excel模板
+ function DownloadImportTemplate(){
+ 	my_url = "downloadonefile.php?filepath=phpexcel/file_excel/ImportTemplate.xls&filename=用户分组信息导入模板.xls";
+ 	window.open(my_url,"_blank");
+ }
+ 
+ //下载错误的Excel表格
+ function DownloadImportErrordata(){
+ 	my_url = "downloadonefile.php?filepath=phpexcel/file_excel/ImportErrordata.xlsx&filename=用户分组信息错误信息返回.xlsx";
+ 	window.open(my_url,"_blank");
+ }
+
+ //导入Excel表格数据
+ function Import_Excel(btn_obj){
+ 	//防止重复点击
+ 	btn_obj.onclick = null;
+ 	btn_obj.innerHTML = "正在处理";
+ 	
+ 	var excel_obj = $("#excelfile").get(0).files;
+ 	if(excel_obj.length > 0){
+ 		//获取文件后缀并判断是否为xls
+ 		var tmp_arr = excel_obj[0].name.split(".");
+ 		var ext = tmp_arr[1];
+ 		if(ext == "xls"){
+ 			var fd = new FormData();
+ 			fd.append("upfile",excel_obj[0]);
+ 			$.ajax({
+ 				type:"post",
+ 				url:"phpexcel/usergroup_import.php",
+ 				data:fd,
+ 				processData:false,
+				contentType:false,
+				dataType:"json",
+ 				success:function(data){
+ 					if(data.state){
+   						if(data.data.errorstate){
+ 							$("#errorexceldata").removeClass("hidden");
+   						}
+ 						//刷新表格数据
+ 						RefreshTable();
+ 						//修整保存按钮
+ 						$("#excelfile").attr("value","");
+ 						btn_obj.onclick = Import_Excel;
+ 						btn_obj.innerHTML = "导入";
+ 						alert("导入成功");
+ 					}else{
+ 						alert("导入失败");
+ 					}
+ 				},
+ 				error:function(x,s,t){
+ 					alert("文件传输失败");
+ 					console.log("ajax error!"+s+": "+t);
+ 				}
+ 			});
+ 		}else{
+ 			alert("不是xls文件！");
+ 			$("#excelfile").attr("value","");
+ 			btn_obj.onclick = Import_Excel;
+ 			btn_obj.innerHTML = "保存";
+ 		}
+ 	}else{
+ 		alert("没有Excel文件");
+ 		btn_obj.onclick = Import_Excel;
+ 		btn_obj.innerHTML = "保存";
+ 	}
+ }
+ 
+ //有氧判断
+ function JudgeOxygen(btn_obj){
+ 	$("#save_isoxygen").attr("name",btn_obj.name);
+ 	$.ajax({
+ 		type:"get",
+ 		url:"stepcount_data.php",
+ 		data:{
+ 			flag : "GetJudgeOxygenData",
+ 			self_id : btn_obj.name
+ 		},
+ 		dataType:"json",
+ 		success:function(data){
+// 			console.log(data);
+ 			//头部用户基本信息
+ 			$("#JudgeOxygen input:eq(0)").attr("value",data.data.userphone);
+ 			$("#JudgeOxygen input:eq(1)").attr("value",data.data.userage);
+ 			$("#JudgeOxygen input:eq(2)").attr("value",data.data.userstandardheartrate);
+ 			//达标心率表格数据
+ 			$("#heartratedata").html("");
+ 			if(data.data.heartratedata.length){
+ 				var tmp_html = "";
+ 				for($ky in data.data.heartratedata){
+ 					tmp_html += '<tr><td>'+data.data.heartratedata[$ky].time+'</td><td>'+data.data.heartratedata[$ky].heartrate+'</td></tr>';
+ 				}
+ 				$("#heartratedata").append(tmp_html);
+ 			}
+ 			//是否达标判断
+ 			switch(data.data.isoxygen){
+ 				case "是":
+ 					$("#JudgeOxygen select:eq(0)").html("");
+ 					$("#JudgeOxygen select:eq(0)").html('<option value="是" selected="selected">是</option><option value="否">否</option>');
+ 					break;
+ 				case "否":
+ 					$("#JudgeOxygen select:eq(0)").html("");
+ 					$("#JudgeOxygen select:eq(0)").html('<option value="否" selected="selected">否</option><option value="是">是</option>');
+ 					break
+ 				default :
+ 					$("#JudgeOxygen select:eq(0)").html("");
+ 					$("#JudgeOxygen select:eq(0)").html('<option value="否" selected="selected">否</option><option value="是">是</option>');
+ 					break;
+ 			}
+ 			
+ 		},
+ 		error:function(x,s,t){
+ 			alert("服务器错误");
+ 			console.log(s+": "+t);
+ 		}
+ 	});
+ }
+ 
+ //保存有氧判断
+ function Save_IsOxygen(btn_obj){
+	$.ajax({
+		type:"get",
+		url:"stepcount_data.php",
+		data:{
+			flag : "SaveIsOxygen",
+			self_id : btn_obj.name,
+			isoxygen:$("#JudgeOxygen select:eq(0)").val()
+		},
+		dataType:"json",
+		success:function(data){
+			if(data.state){
+				alert("保存成功");
+			}else{
+				alert(data.message);
+			}
+		},
+		error:function(x,s,t){
+			alert("服务器错误");
+			console.log(s+": "+t);
+		}
+	});
+ }
+</script>
+
+</body>
+</html>

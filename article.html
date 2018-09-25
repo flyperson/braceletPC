@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="ThemeBucket">
+  
+  <link rel="shortcut icon" href="#" type="image/png">
+
+  <title>文章</title>
+
+  <link rel="stylesheet" type="text/css" href="js/bootstrap-wysihtml5/bootstrap-wysihtml5.css" />
+
+  <link href="css/style.css" rel="stylesheet">
+  <link href="css/style-responsive.css" rel="stylesheet">
+
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="js/html5shiv.js"></script>
+  <script src="js/respond.min.js"></script>
+  <![endif]-->
+  
+  <!--dynamic table-->
+  <link href="js/advanced-datatable/css/demo_page.css" rel="stylesheet" />
+  <link href="js/advanced-datatable/css/demo_table.css" rel="stylesheet" />
+  <link rel="stylesheet" href="js/data-tables/DT_bootstrap.css" />
+  
+  <!--froala_editor-->
+  <link rel="stylesheet" type="text/css" href="css/font-awesome.4.6.0.css">
+	<link rel="stylesheet" type="text/css" href="css/froala_editor.min.css">
+</head>
+
+<body class="sticky-header hidden">
+
+<section>
+    <!-- left side start-->
+    <div class="left-side sticky-left-side">
+
+        <!--logo and iconic logo start-->
+        <div class="logo">
+            <!--<a href="index.html"><img src="images/logo.png" alt=""></a>-->
+        </div>
+
+        <div class="logo-icon text-center">
+            <!--<a href="index.html"><img src="images/logo_icon.png" alt=""></a>-->
+        </div>
+        <!--logo and iconic logo end-->
+
+
+        <div class="left-side-inner">
+        	
+            <!--sidebar nav start-->
+            <ul class="nav nav-pills nav-stacked custom-nav">
+                <li class="menu-list nav-active"><a href="index.html"><i class="fa fa-home"></i> <span>后台管理</span></a>
+                    <ul class="sub-menu-list">
+                        <li><a href="index.html"> 人员信息 </a></li>
+                        <li class="active"><a href="article.html"> 文章 </a></li>
+                        <li><a href="userstepcount.html"> 个人步数 </a></li>
+                        <li><a href="userheartrate.html"> 个人心率 </a></li>
+                        <li><a href="usertotalstepcount.html"> 个人总步数 </a></li>
+                        <li><a href="groupstepcount.html"> 分组步数 </a></li>
+                        <li><a href="grouptotalstepcount.html"> 分组总步数 </a></li>
+                    </ul>
+                </li>
+            </ul>
+            <!--sidebar nav end-->
+
+        </div>
+    </div>
+    <!-- left side end-->
+    
+    <!-- main content start-->
+    <div class="main-content" >
+
+        <!-- header section start-->
+        <div class="header-section">
+
+        <!--toggle button start-->
+        <a class="toggle-btn"><i class="fa fa-bars"></i></a>
+        <!--toggle button end-->
+
+        </div>
+        <!-- header section end-->
+
+        <!--body wrapper start-->
+        <div class="wrapper">
+            <div class="row">
+                <div class="col-md-12">
+                    <section class="panel">
+                        <header class="panel-heading">
+                            <h3>文章编辑</h3>
+                             <!--<span class="tools pull-right">
+                                <a class="fa fa-chevron-down" href="javascript:;"></a>
+                                <a class="fa fa-times" href="javascript:;"></a>
+                             </span>-->
+                        </header>
+                        <!--表格显示 start-->
+								        <div id="showtablemssage" class="adv-table">
+								        	<button class="btn btn-primary" id="new_article">新建文章</button>
+									        <table  class="display table table-bordered table-striped" id="dynamic-table">
+										        <thead>
+											        <tr>
+											            <th>标题</th>
+											            <th>创建时间</th>
+											            <th>操作</th>
+											        </tr>
+										        </thead>
+										        <tbody>
+										        	
+										        	
+										        </tbody>
+									        </table>
+								        </div>
+								        <!--表格显示 end-->
+								        
+								        <!--编辑器 start-->
+								        <div id="create_artcle" class="adv-table hidden">
+								        	<input class="hidden" type="text" id="judge_update_insert" value="" />
+								        	<div class="form-horizontal adminex-form">
+								        		<div class="form-group">
+				                        <div class="col-sm-12" style="text-align: center;">
+				                            <button class="btn btn-primary" id="save_artcle">提交</button>
+				                            &nbsp;
+				                            <button class="btn btn-danger" id="cancle_artcle">取消</button>
+				                            
+				                        </div>
+				                    </div>
+								        		<div class="form-group">
+				                        <label class="col-sm-1 col-sm-1 control-label"><span style="color: red;">*</span>标题</label>
+				                        <div class="col-sm-5">
+				                            <input type="text" class="form-control" id="artcle_title">
+				                        </div>
+				                    </div>
+				                    <div class="form-group">
+				                    		<label class="col-sm-1 col-sm-1 control-label">正文</label>
+				                    		<div class="col-sm-10">
+				                           <div id='edit' style="margin-top: 30px;"></div>
+				                        </div>
+				                    </div>
+								        	</div>
+								        </div>
+								        <!--编辑器 end-->
+                    </section>
+                </div>
+            </div>
+        </div>
+        <!--body wrapper end-->
+    </div>
+    <!-- main content end-->
+</section>
+
+<!-- Placed js at the end of the document so the pages load faster -->
+<script src="js/jquery-1.10.2.min.js"></script>
+<script src="js/jquery-ui-1.9.2.custom.min.js"></script>
+<script src="js/jquery-migrate-1.2.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/modernizr.min.js"></script>
+<script src="js/jquery.nicescroll.js"></script>
+
+<!--dynamic table-->
+<script type="text/javascript" language="javascript" src="js/advanced-datatable/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="js/data-tables/DT_bootstrap.js"></script>
+
+<!--<script type="text/javascript" src="js/ckeditor/ckeditor.js"></script>-->
+
+<!--<script type="text/javascript" src="js/bootstrap-wysihtml5/wysihtml5-0.3.0.js"></script>-->
+<!--<script type="text/javascript" src="js/bootstrap-wysihtml5/bootstrap-wysihtml5.js"></script>-->
+
+<!--froala_editor-->
+<script src="js/froala_editor.min.js"></script>
+<!--[if lt IE 9]>
+<script src="../js/froala_editor_ie8.min.js"></script>
+<![endif]-->
+<script src="js/plugins/tables.min.js"></script>
+<script src="js/plugins/lists.min.js"></script>
+<script src="js/plugins/colors.min.js"></script>
+<script src="js/plugins/media_manager.min.js"></script>
+<script src="js/plugins/font_family.min.js"></script>
+<script src="js/plugins/font_size.min.js"></script>
+<script src="js/plugins/block_styles.min.js"></script>
+<script src="js/plugins/video.min.js"></script>
+
+<!--字符串与base64互转-->
+<script src="js/base64.js"></script>
+
+<!--common scripts for all pages-->
+<script src="js/scripts.js"></script>
+
+<!--判断是否登录-->
+<script type="text/javascript" src="js/judgelogin.js"></script>
+
+<script>
+		function checkarticle(btn_obj){
+			$.ajax({
+				type:"get",
+				url:"article.php",
+				async:true,
+				dataType:"json",
+				data:{
+					flag : "CheckArticle",
+					selfid : btn_obj.name
+				},
+				success: function(data){
+					console.log(data)
+					if(data.state){
+						$("#judge_update_insert").attr("value",data.data[0].selfid);
+						if(data.data[0].selfid == "1" || data.data[0].selfid == "2" || data.data[0].selfid == "5"){
+							$("#artcle_title").attr("readonly",true);
+						}else{
+							$("#artcle_title").attr("readonly",false);
+						}
+						//文章内容转码
+				  	var b = new Base64(); 
+				  	var art_content = b.decode(data.data[0].content);
+						
+						$("#artcle_title").attr("value",data.data[0].title);
+						$("#edit div[class*='froala-element']").html();
+				  	$("#edit div[class*='froala-element']").html(art_content);
+						
+						$("#showtablemssage").addClass("hidden");
+				  	$("#create_artcle").removeClass("hidden");
+				  	
+					}else{
+						alert("查看失败");
+						console.log(data.msg);
+					}
+					
+				},
+				error: function(x,s,t){
+					alert("查看失败!");
+					console.log("ajax error! "+ s +": "+ t);
+				}
+			});	
+		}
+		
+		function deletearticle(btn_obj){
+			if(confirm("是否确认删除？")){
+				$.ajax({
+					type:"get",
+					url:"article.php",
+					async:true,
+					dataType:"json",
+					data:{
+						flag : "DeleteArticle",
+						selfid : btn_obj.name
+					},
+					success: function(data){
+						console.log(data)
+						if(data.state){
+					  	alert("删除成功");
+					  	window.location.reload();
+						}else{
+							alert("删除失败");
+							console.log(data.msg);
+						}
+					},
+					error: function(x,s,t){
+						alert("查看失败!");
+						console.log("ajax error! "+ s +": "+ t);
+					}
+				});	
+			}
+		}
+		
+		function phonecheck(btn_obj){
+			my_url = "seearticle.html?id="+btn_obj.name;
+			window.open(my_url,"_blank");
+		}
+		
+    jQuery(document).ready(function(){
+			var datatableoption = {
+		    	"oLanguage": {//四个部件的语言设置
+	        	"oPaginate": {
+		        	"sFirst": "首页",
+		          "sPrevious": "上一页",
+		          "sNext": "下一页",
+			        "sLast": "末页"
+				    },
+				    "sLengthMenu": "_MENU_ 行/页",
+				    "sInfo": "本页显示 _START_ 到 _END_ 行 共 _TOTAL_ 行",
+		        "sSearch": "查找：",
+		        "sEmptyTable": "无数据！",
+		        "sInfoEmpty": "本页显示 0 到 0 行 共 0 行",
+		        "sLoadingRecords": "加载中...",
+		        "sProcessing": "处理中...",
+		        "sInfoFiltered": "(在 _MAX_ 行中没有找到相应行)",
+						"sZeroRecords": "没有找到相应数据！",
+		      },
+		      "aLengthMenu": [
+		        [5, 15, 20,30,100, -1],
+		        [5, 15, 20,30,100, "All"] // change per page values here
+	        ],
+	        "iDisplayLength": 5,
+	        "sDom": "<'row'<'col-lg-6'l><'col-lg-6'f>r>t<'row'<'col-lg-6'i><'col-lg-6'p>>",
+	        "sPaginationType": "bootstrap",//编页码类型
+	        "aaSorting": [],
+	        
+	        "sAjaxSource": "article.php",
+	        "fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
+	        	oSettings.jqXHR = $.ajax( {
+	        		"dataType": 'json', 
+			        "type": "GET", 
+			        "url": sSource, 
+			        "data": {
+			        	"flag":"GetArticleMessage"
+			        },
+			        "success": function(data){
+	//		        	console.log(data);
+			        	if (!data.state ) {
+									oSettings.oApi._fnLog( oSettings, 0, data.message );
+								}
+								$(oSettings.oInstance).trigger('xhr', [oSettings, data]);
+								fnCallback( data );
+			        },
+			        error: function(x,s,t){
+			        	alert("加载数据失败");
+			        	console.log("ajax error! "+s+": "+t);
+			        }
+	        	})
+	        },
+	        "sAjaxDataProp": "data",
+					"aoColumns":[
+						{"mData":"title"},
+						{"mData":"createdate"},
+						{"mData":"handle"},
+					],
+		  }
+		  var Tab =  $('#dynamic-table').dataTable(datatableoption);
+		  
+		  //编辑器初始化
+		   var Edit_div = $('#edit').editable({inlineMode: false, alwaysBlank: true});
+//		   console.log(Edit_div);
+		   
+		  //新建文章
+		  $("#new_article").click(function(){
+		  	//选择显示
+		  	$("#showtablemssage").addClass("hidden");
+		  	$("#create_artcle").removeClass("hidden");
+		  	
+		  	//清除数据
+		  	$("#judge_update_insert").attr("value","");
+		  	$("#artcle_title").attr("value","");
+		  	$("#edit div[class*='froala-element']").html("");
+		  	
+		  });
+		  
+		  //取消编辑
+		  $("#cancle_artcle").click(function(){
+		  	$("#create_artcle").addClass("hidden");
+		  	$("#showtablemssage").removeClass("hidden");		  	
+		  });
+		  
+		  //保存文章 
+		  $("#save_artcle").click(function(){
+		  	//获取更新的标志：insert或update
+		  	var judge_update_insert = $("#judge_update_insert").val();
+		  	
+		  	//获取文章标题
+		  	var art_title = $("#artcle_title").val();
+		  	//获取文章内容
+		  	var art_content = $("#edit div[class*='froala-element']").html();
+		  	//判断标题和内容不为空
+		  	if(art_title.length >0 && art_content.length > 0){
+			  	//文章内容转码
+			  	var b = new Base64(); 
+			  	var art_content_64 = b.encode(art_content);
+			  	$.ajax({
+			  		type:"post",
+			  		url:"article.php",
+			  		async:true,
+			  		data:{
+			  			flag : "NewArtcle",
+			  			art_title : art_title,
+			  			art_content_64 : art_content_64,
+			  			judge_update_insert : judge_update_insert
+			  		},
+			  		success:function(data){
+			  			alert("保存成功")
+			  			window.location.reload();
+			  		},
+			  		error:function(x,s,t){
+			  			alert("保存失败");
+			  			console.log("ajax error! "+ s +": "+ t);
+			  		}
+			  	});
+			  }else{
+			  	alert("标题和内容不能为空！");
+			  }
+		  });
+
+		  
+    });
+</script>
+
+</body>
+</html>
