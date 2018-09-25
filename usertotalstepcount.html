@@ -102,12 +102,14 @@
 				        </header>
 				        <div class="panel-body">
 					        <div class="adv-table">
+					        	<button class="btn btn-primary" onclick="ExportExcel('phpexcel/usertotalstepcountdata.php')">导出Excel</button>
 						        <table  class="display table table-bordered table-striped" id="dynamic-table">
 							        <thead>
 								        <tr>
 								            <th>手机</th>
 								            <th>姓名</th>
 								            <th>分组</th>
+								            <th>截止日期</th>
 								            <th>总步数</th>
 								            <th>总分数</th>
 								            <!--<th>总卡路里</th>-->
@@ -156,6 +158,11 @@
 <script type="text/javascript" src="js/judgelogin.js"></script>
 
 <script type="text/javascript">
+	  //导出Excel表函数
+		function ExportExcel(myurl){
+			window.open(myurl,"_blank");
+		}
+	
 		var datatableoption = {
 	    	"oLanguage": {//四个部件的语言设置
         	"oPaginate": {
@@ -211,8 +218,9 @@
 					{"mData":"userphone"},
 					{"mData":"username"},
 					{"mData":"usergroup"},
+					{"mData":"record_date"},
 					{"mData":"step_count"},
-					{"mData":"score"},
+					{"mData":"score"}
 //					{"mData":"calorie"},
 				],
 	    }

@@ -102,10 +102,12 @@
 				        </header>
 				        <div class="panel-body">
 					        <div class="adv-table">
+					        	<button class="btn btn-primary" onclick="ExportExcel('phpexcel/grouptotalstepcountdata.php')">导出Excel</button>
 						        <table  class="display table table-bordered table-striped" id="dynamic-table">
 							        <thead>
 								        <tr>
 								            <th>分组</th>
+								            <th>截止日期</th>
 								            <th>总步数</th>
 								            <th>总分数</th>
 								            <!--<th>总卡路里</th>-->
@@ -154,6 +156,10 @@
 <script type="text/javascript" src="js/judgelogin.js"></script>
 
 <script type="text/javascript">
+		//导出Excel表函数
+		function ExportExcel(myurl){
+			window.open(myurl,"_blank");
+		}
 		var datatableoption = {
 	    	"oLanguage": {//四个部件的语言设置
         	"oPaginate": {
@@ -207,6 +213,7 @@
         "sAjaxDataProp": "data",
 				"aoColumns":[
 					{"mData":"usergroup"},
+					{"mData":"record_date"},
 					{"mData":"step_count"},
 					{"mData":"score"}
 //					{"mData":"calorie"}

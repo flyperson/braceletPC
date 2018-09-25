@@ -8,7 +8,7 @@ require_once "classes/judge_class.php";
 
 $flag = isset($_REQUEST["flag"])? $_REQUEST["flag"] : "" ;
 
-//$flag = "GetGroupStepcountMessage";
+//$flag = "GetTotalStepcountMessage";
 
 $state = 0;
 $message = "";
@@ -38,12 +38,12 @@ switch($flag){
 		break;
 	
 	case "GetTotalStepcountMessage" : 
-		$sql = "SELECT userphone,username,usergroup,SUM(step_count) AS step_count,SUM(score) AS score,SUM(calorie) AS calorie FROM allstepcount GROUP BY userphone ORDER BY userphone;";
+		$sql = "SELECT userphone,username,usergroup,SUM(step_count) AS step_count,SUM(score) AS score,SUM(calorie) AS calorie,record_date FROM allstepcount GROUP BY userphone ORDER BY record_date DESC;";
 		$result = $conn->query($sql);
 		if($result->num_rows>0){
 			$tmpdata = "";
 			while($row = $result->fetch_row()){
-				$tmpdata .= ','.'{"userphone":"'.$row[0].'","username":"'.$row[1].'","usergroup":"'.$row[2].'","step_count":"'.$row[3].'","score":"'.$row[4].'","calorie":"'.$row[5].'"}';
+				$tmpdata .= ','.'{"userphone":"'.$row[0].'","username":"'.$row[1].'","usergroup":"'.$row[2].'","step_count":"'.$row[3].'","score":"'.$row[4].'","calorie":"'.$row[5].'","record_date":"'.$row[6].'"}';
 			}
 			$tmpdata = substr($tmpdata, 1);
 			$redata = '['.$tmpdata.']';
@@ -72,12 +72,12 @@ switch($flag){
 		break;
 		
 	case "GetGroupTotalStepcountMessage" : 
-		$sql = "SELECT usergroup,SUM(step_count) AS step_count,SUM(score) AS score,SUM(calorie) AS calorie FROM allstepcount GROUP BY usergroup  ORDER BY record_date;";
+		$sql = "SELECT usergroup,SUM(step_count) AS step_count,SUM(score) AS score,SUM(calorie) AS calorie,MAX(record_date) AS record_date FROM allstepcount GROUP BY usergroup  ORDER BY record_date DESC;";
 		$result = $conn->query($sql);
 		if($result->num_rows>0){
 			$tmpdata = "";
 			while($row = $result->fetch_row()){
-				$tmpdata .= ','.'{"usergroup":"'.$row[0].'","step_count":"'.$row[1].'","score":"'.$row[2].'","calorie":"'.$row[3].'"}';
+				$tmpdata .= ','.'{"usergroup":"'.$row[0].'","step_count":"'.$row[1].'","score":"'.$row[2].'","calorie":"'.$row[3].'","record_date":"'.$row[4].'"}';
 			}
 			$tmpdata = substr($tmpdata, 1);
 			$redata = '['.$tmpdata.']';
