@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>插入对应的步数</title>
+	</head>
+	<body>
+		<div id="formdata">
+			<div>
+				<label>用户id</label>
+				<input type="text" />
+			</div>
+			<div>
+				<label>步数</label>
+				<input type="text" />
+			</div>
+			<div>
+				<label>日期</label>
+				<input type="date" />
+			</div>
+		</div>
+		
+		<div>
+			<button id="add_btn">增加</button>
+		</div>
+		
+		<div>
+			<textarea rows="100" cols="100" id="data_show"></textarea>
+		</div>
+		
+		<script src="js/jquery-1.10.2.min.js"></script>
+		<script type="text/javascript">
+			var senddata = {data : new Array()};
+			$("#add_btn").on("click",function(){
+				senddata.data.push({"user_id":$("#formdata input:eq(0)").val(),"step_count":$("#formdata input:eq(1)").val(),"record_date":$("#formdata input:eq(2)").val()})
+				
+				$("#data_show").val(JSON.stringify(senddata));
+			});
+		</script>
+	</body>
+</html>

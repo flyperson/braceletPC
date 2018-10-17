@@ -38,7 +38,7 @@ foreach($letter as $ky => $column){
 	$objPHPExcel->getActiveSheet()->getStyle($column.'1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);//水平居中 	
 }
 
-$sql_s = "SELECT userphone,username,usergroup,heart_rate,record_date FROM allheartrate";	
+$sql_s = "SELECT userphone,username,usergroup,heart_rate,record_date FROM allheartrate ORDER BY usergroup,record_date";	
 $result = $conn->query($sql_s);
 $i=2;
 if($result->num_rows>0){

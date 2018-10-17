@@ -41,7 +41,7 @@ foreach($letter as $ky => $column){
 	$objPHPExcel->getActiveSheet()->getStyle($column.'1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);//水平居中 	
 }
 
-$sql_s = "SELECT usergroup,SUM(step_count) AS step_count,SUM(score) AS score,SUM(calorie) AS calorie,record_date,SUM(`score`)/COUNT(`usergroup`) AS average,COUNT(`usergroup`) AS groupnum FROM allstepcount GROUP BY usergroup,record_date  ORDER BY record_date;";	
+$sql_s = "SELECT usergroup,SUM(step_count) AS step_count,SUM(score) AS score,SUM(calorie) AS calorie,record_date,SUM(`score`)/COUNT(`usergroup`) AS average,COUNT(`usergroup`) AS groupnum FROM allstepcount GROUP BY usergroup,record_date  ORDER BY usergroup,record_date;";	
 $result = $conn->query($sql_s);
 $i=2;
 if($result->num_rows>0){
