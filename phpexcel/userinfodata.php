@@ -1,21 +1,20 @@
 <?php
-/*HeartrateExport
- * 心率数据的导出
+/*StepcountExport
+ * 导出心率的数据
+ * 
  * */
 include 'Classes/PHPExcel.php';
 require_once('Classes/PHPExcel/Writer/Excel2007.php'); 
 include '../conn.php';
-
-$enddate = isset($_GET["enddate"]) ? $_GET["enddate"] : date("Y-m-d");
 
 //创建Excel对象
 $objPHPExcel = new PHPExcel(); 
 //Set properties 设置文件属性  这部分随意
 $objPHPExcel->getProperties()->setCreator("KingShen");  
 $objPHPExcel->getProperties()->setLastModifiedBy("KingShen");  
-$objPHPExcel->getProperties()->setTitle("Office 2007 XLSX Test HeartrateExport");  
+$objPHPExcel->getProperties()->setTitle("Office 2007 XLSX Test StepcountExport");  
 $objPHPExcel->getProperties()->setSubject("Office 2007 XLSX Test Document");  
-$objPHPExcel->getProperties()->setDescription("Test document for Office 2007 XLSX,HeartrateExport");  
+$objPHPExcel->getProperties()->setDescription("Test document for Office 2007 XLSX,StepcountExport");  
 $objPHPExcel->getProperties()->setKeywords("office 2007 openxml php");  
 $objPHPExcel->getProperties()->setCategory("Test result file"); 
 //Rename sheet 重命名工作表标签  
@@ -27,33 +26,35 @@ $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(15);
 $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(15);
 $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(15);
 $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth(15);  
-$objPHPExcel->getActiveSheet()->getColumnDimension('E')->setWidth(20);
+$objPHPExcel->getActiveSheet()->getColumnDimension('E')->setWidth(15);
 //编写表字段
-$objPHPExcel->getActiveSheet()->setCellValue('A1','手机');
-$objPHPExcel->getActiveSheet()->setCellValue('B1','姓名');
-$objPHPExcel->getActiveSheet()->setCellValue('C1','分组');
-$objPHPExcel->getActiveSheet()->setCellValue('D1','心率');
-$objPHPExcel->getActiveSheet()->setCellValue('E1','日期');
+$objPHPExcel->getActiveSheet()->setCellValue('A1','序号');
+$objPHPExcel->getActiveSheet()->setCellValue('B1','账号');
+$objPHPExcel->getActiveSheet()->setCellValue('C1','名称');
+$objPHPExcel->getActiveSheet()->setCellValue('D1','年龄');
+$objPHPExcel->getActiveSheet()->setCellValue('E1','分组');
 //居中
 foreach($letter as $ky => $column){
 	$objPHPExcel->getActiveSheet()->getStyle($column.'1')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);//垂直居中
 	$objPHPExcel->getActiveSheet()->getStyle($column.'1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);//水平居中 	
 }
 
-$sql_s = "SELECT userphone,username,usergroup,heart_rate,record_date FROM allheartrate WHERE record_date LIKE '".$enddate."%' ORDER BY usergroup";
-
+$sql_s = "SELECT userphone,username,userage,usergroup FROM user ORDER BY usergroup;";	
 $result = $conn->query($sql_s);
 $i=2;
 if($result->num_rows>0){
+	$j = 1;
 	while($row = $result->fetch_assoc()){
-		$objPHPExcel->getActiveSheet()->setCellValueExplicit('A'.$i,$row['userphone'],PHPExcel_Cell_DataType::TYPE_STRING);//显示字符串
-		$objPHPExcel->getActiveSheet()->setCellValue('B'.$i,$row['username'],PHPExcel_Cell_DataType::TYPE_STRING);
-		$objPHPExcel->getActiveSheet()->setCellValueExplicit('C'.$i,$row['usergroup'],PHPExcel_Cell_DataType::TYPE_STRING);//显示字符串
-		$objPHPExcel->getActiveSheet()->setCellValue('D'.$i,$row['heart_rate']);
-		$objPHPExcel->getActiveSheet()->setCellValue('E'.$i,$row['record_date']);
+		$objPHPExcel->getActiveSheet()->setCellValueExplicit('A'.$i,$j,PHPExcel_Cell_DataType::TYPE_STRING);//显示字符串
+		$objPHPExcel->getActiveSheet()->setCellValue('B'.$i,$row['userphone'],PHPExcel_Cell_DataType::TYPE_STRING);
+		$objPHPExcel->getActiveSheet()->setCellValueExplicit('C'.$i,$row['username'],PHPExcel_Cell_DataType::TYPE_STRING);//显示字符串
+		$objPHPExcel->getActiveSheet()->setCellValue('D'.$i,$row['userage']);
+		$objPHPExcel->getActiveSheet()->setCellValue('E'.$i,$row['usergroup'],PHPExcel_Cell_DataType::TYPE_STRING);
+		
 		//日期格式化
-		$objPHPExcel->getActiveSheet()->getStyle('E'.$i)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_DATE_YYYYMMDDSLASH);
+		$objPHPExcel->getActiveSheet()->getStyle('F'.$i)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_DATE_YYYYMMDDSLASH);
 		$i++;
+		$j++;
 	}
 }else{
 	exit("没有数据！");
@@ -63,16 +64,15 @@ $conn->close();
 //保存
 $objWriter = new PHPExcel_Writer_Excel2007($objPHPExcel);  
 //$objWriter->save(str_replace('.php', '.xlsx', __FILE__));
-$objWriter->save("file_excel/Heartratedata.xlsx");
+$objWriter->save("file_excel/Stepcountdata.xlsx");
 
 
 
 //输出下载
 sleep(1);
-//$filename = "file_excel/Heartratedata.xlsx";
-$name = "日心率数据".$enddate.".xlsx"; 
+//$filename = "file_excel/Stepcountdata.xlsx";
+$name = "用户数据-导出时间".date("Y年m月d日").".xlsx"; 
 //if(file_exists($filename)){
-////	header("content-type:application/octet-stream");
 //	header('content-disposition:attachment;filename='.$name);
 //	header('content-length:'.filesize($filename));
 //	readfile($filename);
@@ -80,6 +80,6 @@ $name = "日心率数据".$enddate.".xlsx";
 //	echo '<script type="text/javascript">alert("文件已被删除或移动了！");window.close();</script>';
 //}
 
-header("Location:../downloadonefile.php?filepath=phpexcel/file_excel/Heartratedata.xlsx&filename=".$name)
+header("Location:../downloadonefile.php?filepath=phpexcel/file_excel/Stepcountdata.xlsx&filename=".$name)
 
 ?>

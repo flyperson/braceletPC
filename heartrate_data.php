@@ -1,6 +1,8 @@
 <?php
+//ini_set("memory_limit", "1024M");
+
 header("Charset:UTF-8");
-header("Content-Type:application/json");
+//header("Content-Type:application/json");
 
 require_once "conn.php";
 
@@ -14,7 +16,8 @@ $redata = "";
 
 switch($flag){
 	case "GetHeartRateMessage" : 
-		$sql = "SELECT userphone,username,usergroup,heart_rate,record_date FROM allheartrate";
+		$setdate = isset($_GET["setdate"]) ? $_GET["setdate"] :date("Y-m-d");
+		$sql = "SELECT userphone,username,usergroup,heart_rate,record_date FROM allheartrate WHERE record_date LIKE '".$setdate."%'";
 		$result = $conn->query($sql);
 		if($result->num_rows>0){
 			$tmpdata = "";

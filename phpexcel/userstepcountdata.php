@@ -7,6 +7,15 @@ include 'Classes/PHPExcel.php';
 require_once('Classes/PHPExcel/Writer/Excel2007.php'); 
 include '../conn.php';
 
+//接收数据
+$startdate = isset($_GET["startdate"]) ? $_GET["startdate"] : "2018-09-01";
+$enddate = isset($_GET["enddate"]) ? $_GET["enddate"] : date("Y-m-d");
+if(strtotime($startdate) > strtotime($enddate)){
+	$temp = $startdate;
+	$startdate = $enddate;
+	$enddate = $temp;
+}
+
 //创建Excel对象
 $objPHPExcel = new PHPExcel(); 
 //Set properties 设置文件属性  这部分随意
@@ -43,7 +52,9 @@ foreach($letter as $ky => $column){
 	$objPHPExcel->getActiveSheet()->getStyle($column.'1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);//水平居中 	
 }
 
-$sql_s = "SELECT userphone,username,usergroup,step_count,praise_number,score,calorie,isoxygen,record_date FROM allstepcount ORDER BY usergroup,record_date";	
+//$sql_s = "SELECT userphone,username,usergroup,step_count,praise_number,score,calorie,isoxygen,record_date FROM allstepcount ORDER BY usergroup,record_date";
+$sql_s = "SELECT userphone,username,usergroup,step_count,praise_number,score,calorie,isoxygen,MAX(record_date) AS record_date FROM allstepcount WHERE record_date BETWEEN '".$startdate."' AND '".$enddate."' ORDER BY usergroup,record_date";
+	
 $result = $conn->query($sql_s);
 $i=2;
 if($result->num_rows>0){
@@ -74,7 +85,7 @@ $objWriter->save("file_excel/Stepcountdata.xlsx");
 //输出下载
 sleep(1);
 //$filename = "file_excel/Stepcountdata.xlsx";
-$name = "全部步数数据.xlsx"; 
+$name = "个人步数数据".$startdate."_".$enddate.".xlsx"; 
 //if(file_exists($filename)){
 //	header('content-disposition:attachment;filename='.$name);
 //	header('content-length:'.filesize($filename));

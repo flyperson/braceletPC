@@ -103,7 +103,8 @@
 				        <div class="panel-body">
 					        <div class="adv-table">
 					        	<!--<button class="btn btn-primary" data-toggle="modal" href="#ImportExcel">导出Excel</button>-->
-					        	<button class="btn btn-primary" onclick="ExportExcel('phpexcel/userstepcountdata.php')">导出Excel</button>
+					        	<button class="btn btn-primary" data-toggle="modal" href="#ExportExcel">导出Excel</button>
+					        	<!--<button class="btn btn-primary" onclick="ExportExcel('phpexcel/userstepcountdata.php')">导出Excel</button>-->
 						        <table  class="display table table-bordered table-striped" id="dynamic-table">
 							        <thead>
 								        <tr>
@@ -130,7 +131,7 @@
         </div>
         <!--body wrapper end-->
     
-    <!--导出Excel模块 star-->
+    <!--导入Excel模块 star-->
 		<div class="modal fade" id="ImportExcel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
@@ -164,6 +165,42 @@
 					 	</div>
             <div class="modal-footer" align="center">
             	<button class="btn btn-primary" type="button" onclick="Import_Excel(this)" >导入</button>
+              <button data-dismiss="modal" class="btn btn-primary" type="button">关闭</button>
+        		</div>
+       		</div>
+        </div>
+    	</div>
+    </div>		
+    <!--导入Excel模块 end-->	
+    
+    <!--导出Excel模块 star-->
+		<div class="modal fade" id="ExportExcel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title">Excel表格导出</h4>
+					</div>
+					<div class="modal-body">
+						<div class="form-horizontal " id="my_form_date">
+							<div class="form-group center">
+								<p style="color: red;">说明：如果要下载某一天的数据请把两个时间设为一致</p>
+							</div>
+							<div class="form-group">
+	                <label class="control-label col-md-4">开始时间：</label>
+	                <div class="col-md-6 col-xs-11">
+	                    <input class="form-control form-control-inline input-medium" type="date" value="2018-09-01"  />
+	                </div>
+	            </div>
+					 		<div class="form-group">
+                <label class="control-label col-md-4">截止时间：</label>
+                <div class="col-md-6 col-xs-11">
+                    <input class="form-control form-control-inline input-medium"  type="date" value="" id="nowdate"  />
+                </div>
+            	</div>
+					 	</div>
+            <div class="modal-footer" align="center">
+            	<button class="btn btn-primary" type="button" onclick="Export_Excel(this)" >导出</button>
               <button data-dismiss="modal" class="btn btn-primary" type="button">关闭</button>
         		</div>
        		</div>
@@ -265,6 +302,9 @@
 <script type="text/javascript" src="js/judgelogin.js"></script>
 
 <script type="text/javascript">
+		var d = new Date();
+		$("#nowdate").val(d.getFullYear()+"-"+(Number(d.getMonth())+1)+"-"+d.getDate());
+		
 		var datatableoption = {
 	    	"oLanguage": {//四个部件的语言设置
         	"oPaginate": {
@@ -478,6 +518,15 @@
  //导出Excel表函数
  function ExportExcel(myurl){
  	window.open(myurl,"_blank");
+ }
+ 
+  //导出Excel表函数-条件
+ function Export_Excel(btn_obj){
+// 	window.open(myurl,"_blank");
+		var startdate = $("#my_form_date input:eq(0)").val();
+		var enddate = $("#my_form_date input:eq(1)").val();
+		my_url = "phpexcel/userstepcountdata.php?startdate="+startdate+"&"+"enddate="+enddate;
+		window.open(my_url,"_blank");
  }
  
   //有氧判断

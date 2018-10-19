@@ -102,8 +102,15 @@
 				        </header>
 				        <div class="panel-body">
 					        <div class="adv-table">
+					        	<div class="form-inline">
+			                <div class="form-group">
+			                	<label>选择显示日期：</label>
+                        <input type="date" class="form-control" onchange="ChangeTableInfo(this)" value="" id="showdateset" />       
+                      </div>
+                      <button class="btn btn-primary" data-toggle="modal" href="#ExportExcel">导出Excel</button>
+		                </div>
 					        	<!--<button class="btn btn-primary" data-toggle="modal" href="#ImportExcel">导出Excel</button>-->
-					        	<button class="btn btn-primary" onclick="ExportExcel('phpexcel/userheartratedata.php')">导出Excel</button>
+					        	<!--<button class="btn btn-primary" onclick="ExportExcel('phpexcel/userheartratedata.php')">导出Excel</button>-->
 						        <table  class="display table table-bordered table-striped" id="dynamic-table">
 							        <thead>
 								        <tr>
@@ -212,7 +219,43 @@
     	</div>
     </div>		
     <!--查看用户信息模块 end-->	
-        
+    
+    <!--导出Excel模块 star-->
+		<div class="modal fade" id="ExportExcel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title">Excel表格导出</h4>
+					</div>
+					<div class="modal-body">
+						<div class="form-horizontal " id="my_form_date">
+							<!--<div class="form-group center">
+								<p style="color: red;">说明：如果要下载某一天的数据请把两个时间设为一致</p>
+							</div>-->
+							<!--<div class="form-group">
+	                <label class="control-label col-md-4">日期：</label>
+	                <div class="col-md-6 col-xs-11">
+	                    <input class="form-control form-control-inline input-medium" type="date" value="2018-09-01"  />
+	                </div>
+	            </div>-->
+					 		<div class="form-group">
+                <label class="control-label col-md-4">日期：</label>
+                <div class="col-md-6 col-xs-11">
+                    <input class="form-control form-control-inline input-medium"  type="date" value="" id="nowdate"  />
+                </div>
+            	</div>
+					 	</div>
+            <div class="modal-footer" align="center">
+            	<button class="btn btn-primary" type="button" onclick="Export_Excel(this)" >导出</button>
+              <button data-dismiss="modal" class="btn btn-primary" type="button">关闭</button>
+        		</div>
+       		</div>
+        </div>
+    	</div>
+    </div>		
+    <!--导出Excel模块 end-->
+    
     </div>
     <!-- main content end-->
 </section>
@@ -245,6 +288,12 @@
 <script type="text/javascript" src="js/judgelogin.js"></script>
 
 <script type="text/javascript">
+		
+		var d = new Date();
+		var now_date = d.getFullYear()+"-"+(Number(d.getMonth())+1)+"-"+d.getDate();
+		$("#nowdate").val(now_date);
+		$("#showdateset").val(now_date);
+		
 		var datatableoption = {
 	    	"oLanguage": {//四个部件的语言设置
         	"oPaginate": {
@@ -256,7 +305,7 @@
 			    "sLengthMenu": "_MENU_ 行/页",
 			    "sInfo": "本页显示 _START_ 到 _END_ 行 共 _TOTAL_ 行",
 	        "sSearch": "查找：",
-	        "sEmptyTable": "无数据！",
+	        "sEmptyTable": "当天无数据！",
 	        "sInfoEmpty": "本页显示 0 到 0 行 共 0 行",
 	        "sLoadingRecords": "加载中...",
 	        "sProcessing": "处理中...",
@@ -305,7 +354,74 @@
 				],
 	    }
 	  var Tab =  $('#dynamic-table').dataTable(datatableoption);
-	    
+	
+	//表格更新数据
+	function ChangeTableInfo(inp_obj){
+		Tab.fnClearTable();
+		Tab.fnDestroy();
+		var datatableoption_2 = {
+    	"oLanguage": {//四个部件的语言设置
+    	"oPaginate": {
+        	"sFirst": "首页",
+          "sPrevious": "上一页",
+          "sNext": "下一页",
+	        "sLast": "末页"
+		    },
+		    "sLengthMenu": "_MENU_ 行/页",
+		    "sInfo": "本页显示 _START_ 到 _END_ 行 共 _TOTAL_ 行",
+        "sSearch": "查找：",
+        "sEmptyTable": $(inp_obj).val()+"无数据！",
+        "sInfoEmpty": "本页显示 0 到 0 行 共 0 行",
+        "sLoadingRecords": "加载中...",
+        "sProcessing": "处理中...",
+        "sInfoFiltered": "(在 _MAX_ 行中没有找到相应行)",
+				"sZeroRecords": "没有找到相应数据！",
+      },
+      "aLengthMenu": [
+        [5, 15, 20,30,100, -1],
+        [5, 15, 20,30,100, "All"] // change per page values here
+    ],
+    "iDisplayLength": 5,
+//      "sDom": "<'row'<'col-lg-6'l><'col-lg-6'f>r>t<'row'<'col-lg-6'i><'col-lg-6'p>>",
+    "sPaginationType": "bootstrap",//编页码类型
+    "aaSorting": [],
+    
+    "sAjaxSource": "heartrate_data.php",
+    "fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
+    	oSettings.jqXHR = $.ajax( {
+    		"dataType": 'json', 
+	        "type": "GET", 
+	        "url": sSource, 
+	        "data": {
+	        	"flag":"GetHeartRateMessage",
+	        	"setdate" : $(inp_obj).val()
+	        },
+	        "success": function(data){
+//		        	console.log(data);
+	        	if (!data.state ) {
+							oSettings.oApi._fnLog( oSettings, 0, data.message );
+						}
+						$(oSettings.oInstance).trigger('xhr', [oSettings, data]);
+						fnCallback( data );
+	        },
+	        error: function(x,s,t){
+	        	alert("加载数据失败");
+	        	console.log("ajax error! "+s+": "+t);
+	        }
+    	})
+    },
+    "sAjaxDataProp": "data",
+			"aoColumns":[
+				{"mData":"userphone"},
+				{"mData":"username"},
+				{"mData":"usergroup"},
+				{"mData":"heart_rate"},
+				{"mData":"record_date"}
+			],
+    }
+		Tab =  $('#dynamic-table').dataTable(datatableoption_2);
+		$('#dynamic-table').attr("style","");
+	}
  
  //刷新表格
  function RefreshTable(){
@@ -313,7 +429,7 @@
 	Tab.fnClearTable();
 	Tab.fnDestroy();
 	Tab =  $('#dynamic-table').dataTable(datatableoption);
- 	
+ 	$('#dynamic-table').attr("style","");
  }
  
  //查看个人信息
@@ -454,6 +570,15 @@
  function ExportExcel(myurl){
  	window.open(myurl,"_blank");
  }
+ 
+ //导出Excel表函数-条件
+	function Export_Excel(btn_obj){
+	// 	window.open(myurl,"_blank");
+//			var startdate = $("#my_form_date input:eq(0)").val();
+			var enddate = $("#my_form_date input:eq(0)").val();
+			my_url = "phpexcel/userheartratedata.php?enddate="+enddate;
+			window.open(my_url,"_blank");
+	}
 </script>
 
 </body>

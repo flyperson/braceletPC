@@ -103,6 +103,7 @@
 				        <div class="panel-body">
 					        <div class="adv-table">
 					        	<button class="btn btn-primary" data-toggle="modal" href="#ImportExcel">导入Excel</button>
+					        	<button class="btn btn-primary" onclick="ExportExcel('phpexcel/userinfodata.php')">导出Excel</button>
 					        	<!--<button onclick="RefreshTable()">重构</button>-->
 					        	<!--<button class="btn btn-primary" data-toggle="modal" href="#JudgeOxygen">有氧判断</button>-->
 						        <table  class="display table table-bordered table-striped" id="dynamic-table">
@@ -182,7 +183,7 @@
     </div>		
     <!--查看用户信息模块 end-->
     
-    <!--查看用户信息模块 star-->
+    <!--导入模块 star-->
 		<div class="modal fade" id="ImportExcel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
@@ -222,7 +223,7 @@
         </div>
     	</div>
     </div>		
-    <!--查看用户信息模块 end-->	
+    <!--导入模块 end-->	
     
     <!--个人有氧判断模块 star-->
 		<div class="modal fade" id="JudgeOxygen" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -502,7 +503,12 @@ function RemoveBracelet(btn_obj){
  	my_url = "downloadonefile.php?filepath=phpexcel/file_excel/ImportErrordata.xlsx&filename=用户分组信息错误信息返回.xlsx";
  	window.open(my_url,"_blank");
  }
-
+ 
+ //导出Excel表函数
+ function ExportExcel(myurl){
+ 	window.open(myurl,"_blank");
+ }
+ 
  //导入Excel表格数据
  function Import_Excel(btn_obj){
  	//防止重复点击
