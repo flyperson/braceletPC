@@ -53,7 +53,7 @@ foreach($letter as $ky => $column){
 }
 
 //$sql_s = "SELECT userphone,username,usergroup,step_count,praise_number,score,calorie,isoxygen,record_date FROM allstepcount ORDER BY usergroup,record_date";
-$sql_s = "SELECT userphone,username,usergroup,step_count,praise_number,score,calorie,isoxygen,MAX(record_date) AS record_date FROM allstepcount WHERE record_date BETWEEN '".$startdate."' AND '".$enddate."' ORDER BY usergroup,record_date";
+$sql_s = "SELECT userphone,username,usergroup,step_count,praise_number,score,calorie,isoxygen,record_date FROM allstepcount WHERE record_date BETWEEN '".$startdate."' AND '".$enddate."' ORDER BY usergroup,record_date";
 	
 $result = $conn->query($sql_s);
 $i=2;
